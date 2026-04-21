@@ -35,7 +35,7 @@ The CADI-AI dataset presents three major challenges that drove the custom archit
 
 ```text
 .
-├── Palak_Bhatt_CADI_AI_Assignment.ipynb   ← full training + evaluation notebook
+├── yolov8_transfpn_crop_disease_detection.ipynb   ← full training + evaluation notebook
 ├── transfpn_yolo.yaml                     ← custom architecture config
 ├── cadi_ai.yaml                           ← dataset config
 ├── requirements.txt
