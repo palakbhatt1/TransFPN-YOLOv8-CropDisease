@@ -1,0 +1,36 @@
+
+# TransFPN-YOLO: Custom architecture for CADI-AI crop disease detection
+# Extends YOLOv8n backbone with CBAM, Transformer bottleneck, and BiFPN neck
+
+nc: 3  # number of classes (abiotic, insect, disease)
+
+backbone:
+  # [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]          # 0-P1/2
+  - [-1, 1, Conv, [128, 3, 2]]         # 1-P2/4
+  - [-1, 3, C2f, [128, True]]          # 2
+  - [-1, 1, Conv, [256, 3, 2]]         # 3-P3/8
+  - [-1, 6, C2f, [256, True]]          # 4
+  - [-1, 1, CBAM, [256]]               # 5 — CBAM attention on P3
+  - [-1, 1, Conv, [512, 3, 2]]         # 6-P4/16
+  - [-1, 6, C2f, [512, True]]          # 7
+  - [-1, 1, CBAM, [512]]               # 8 — CBAM attention on P4
+  - [-1, 1, Conv, [1024, 3, 2]]        # 9-P5/32
+  - [-1, 3, C2f, [1024, True]]         # 10
+  - [-1, 1, TransformerBottleneck, [1024, 4]]  # 11 — Transformer at P5  <-- FIXED LINE
+  - [-1, 1, SPPF, [1024, 5]]           # 12 — Spatial Pyramid Pooling
+
+head:
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]  # 13
+  - [[-1, 8], 1, Concat, [1]]                   # 14 — P4+P5
+  - [-1, 3, C2f, [512]]                          # 15 (P4/16-medium)
+  - [-1, 1, nn.Upsample, [None, 2, 'nearest']]  # 16
+  - [[-1, 5], 1, Concat, [1]]                   # 17 — P3+P4
+  - [-1, 3, C2f, [256]]                          # 18 (P3/8-small)
+  - [-1, 1, Conv, [256, 3, 2]]                  # 19
+  - [[-1, 15], 1, Concat, [1]]                  # 20
+  - [-1, 3, C2f, [512]]                          # 21 (P4/16-medium)
+  - [-1, 1, Conv, [512, 3, 2]]                  # 22
+  - [[-1, 12], 1, Concat, [1]]                  # 23
+  - [-1, 3, C2f, [1024]]                         # 24 (P5/32-large)
+  - [[18, 21, 24], 1, Detect, [nc]]             # 25 — Detection head

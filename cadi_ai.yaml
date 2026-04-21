@@ -1,0 +1,9 @@
+names:
+- abiotic
+- insect
+- disease
+nc: 3
+path: /content/data/cadi_ai
+test: test/images
+train: train/images
+val: val/images

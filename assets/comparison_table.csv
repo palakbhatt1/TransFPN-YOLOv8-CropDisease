@@ -1,0 +1,4 @@
+Model,mAP@50,mAP@50-95,mAR,Precision,Recall,AP_abiotic,AP_insect,AP_disease
+YOLOv8n (Baseline),0.4312,0.1682,0.4204,0.5351,0.4204,0.2206,0.1632,0.1206
+TransFPN-YOLO (Ours),0.1839,0.0627,0.2212,0.2888,0.2212,0.0664,0.0828,0.0389
+Δ Improvement,-0.2473,-0.1055,-0.1992,-0.2463,-0.1992,-0.1542,-0.0804,-0.0817
