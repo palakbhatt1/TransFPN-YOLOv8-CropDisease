@@ -2,6 +2,9 @@
 
 Custom object detection project on the **CADI-AI** dataset for identifying **abiotic stress, insect damage, and disease** in crop images. Builds a modified YOLOv8-based detector called **TransFPN-YOLO**, integrating **CBAM attention**, a **Transformer bottleneck**, and **BiFPN** for improved feature fusion.
 
+## Model Deployment
+The fine-tuned model is hosted on Hugging Face:
+[🤗 iamnotpalak/yolov8-transfpn-crop-disease-detection](https://huggingface.co/iamnotpalak/yolov8-transfpn-crop-disease-detection)
 
 ---
 
